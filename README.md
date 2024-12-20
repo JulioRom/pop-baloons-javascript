@@ -1,49 +1,105 @@
-# Pop Balloons game using Javascript, HTML/CSS 🎈🎊
+# Pop the Balloons Game
 
-This is an amazing game to practice HTML, CSS and a little Javascript.
-The game goal is to POP all the balloons by clicking on them.
+## Description
 
-## 🌱  How to start this project
+The **Pop the Balloons Game** is a simple and fun web-based game where the player clicks on balloons to "pop" them. The balloons are organized in a grid layout, and their count decreases as they are popped. Once all balloons are popped, the game resets automatically.
 
-This project comes with the necessary files to start working, but you have two options to start:
+This project demonstrates core front-end development skills, including HTML, CSS, and JavaScript, with animations and interactivity.
 
-a) Open this link in your browser with gitpod (recommended): https://gitpod.io#https://github.com/breatheco-de/exercise-pop-baloons-javascript.git
+---
 
-b) You can clone this repository on your local computer:
-```sh
-$ git clone https://github.com/breatheco-de/exercise-pop-baloons-javascript.git
+## Features
+
+- **Dynamic Grid Layout**: Balloons are displayed in a clean grid layout using CSS Grid.
+- **Interactive Balloons**: Players can click on the balloons to pop them, and their state updates dynamically.
+- **Live Counter**: The number of active balloons is displayed and updates in real-time.
+- **Smooth Animations**: Balloons have floating and shaking animations for a lively experience.
+- **Automatic Reset**: Once all balloons are popped, the game resets automatically for replay.
+
+---
+
+## Technologies Used
+
+- **HTML**: Structure and content of the game.
+- **CSS**: Styling and animations for the balloons.
+- **JavaScript**: Game logic, interactivity, and dynamic updates.
+
+---
+
+## How to Run
+
+1. Clone or download the repository.
+2. Open the `index.html` file in your web browser.
+3. Start popping balloons!
+
+---
+
+## Code Highlights
+
+### Balloon Rendering
+Balloons are dynamically rendered based on an array of colors:
+```javascript
+function renderBalloons() {
+  const balloonContainer = document.querySelector('#balloon-map');
+  balloonContainer.innerHTML = ''; // Clear previous content
+
+  balloonColors.forEach((color, index) => {
+    if (color !== null) {
+      const balloonHTML = `<div class="balloon active" style="background-color: ${color};"></div>`;
+      balloonContainer.innerHTML += balloonHTML;
+    }
+  });
+}
 ```
 
-Run the website by typing the following command on your terminal: `$ npx http-server --yes -c-1`
+### Animation Effects
+The floating and shaking animations are defined with CSS keyframes:
+```css
+@keyframes float {
+  0% { transform: translatey(0px); }
+  50% { transform: translatey(-20px); }
+  100% { transform: translatey(0px); }
+}
 
-## 📝 Instructions
-
-![Balloon Pop Game with HTML/CSS and Javascript](https://github.com/breatheco-de/exercise-pop-baloons-javascript/blob/master/preview.gif?raw=true)
-
-Build a game with the following workflow:
-
-1. When the website loads (`window.onload`) you have to render all the balloons.
-2. Every balloon needs to have an onClick attached to listen to when the user clicks on it.
-3. When the user clicks on it the balloon disappears (pops) from the screen.
-4. When all the 20 balloons have disappeared the website reloads and the game starts again.
-
-## 💪 Strategy
-
-![Strategy to complete the pop balloons](https://github.com/breatheco-de/exercise-pop-baloons-javascript/blob/master/strategy.png?raw=true)
-
-1. First, declare an array of 20 colors, each color will represent a balloon, the colors can repeat.
-2. To pop a balloon, you will have to turn the value on that balloon position on the array equal to `null`. 
-3. Loop all the colors and make the html string for each balloon, you should generate a big html string like this, and add it into the DOM:
-
-```
-<div class="balloon active"></div>
-<div class="balloon popped"></div>
-<div class="balloon active"></div>
-<div class="balloon active"></div>
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
 ```
 
-4. Add that string to the innerHTML of the `<div id="balloon-map">` element using document.querySelector.
+---
 
-5. Update your function that renders the ballons to add also an onClick on each balloon div to listen to the click.
+## Project Structure
 
-6. When a balloon is clicked, go the array of colors and turn the color back to null.
+```
+project-folder/
+│
+├── index.html         # Main HTML file
+├── script.js          # JavaScript logic
+├── styles.css         # CSS animations and styling
+├── README.md          # Project documentation
+```
+
+---
+
+## Future Enhancements
+
+- Add a timer to challenge players.
+- Introduce levels with varying numbers of balloons.
+- Add sound effects when popping balloons.
+- Enhance the visual design with additional animations.
+
+---
+
+## Author
+
+**Julio ROM**  
+
+---
+
+## License
+
+This project is licensed under the MIT License. Feel free to use and modify it as you like.
+
