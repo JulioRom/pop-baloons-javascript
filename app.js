@@ -1,25 +1,66 @@
-// we declare a new global variable containing an array that represents the ballons map
-// you have to add more colors into the ballonsMap array
-let ballonsMap = ['green'];
+// Declarar un array con 20 colores (los colores pueden repetirse)
+const balloonColors = [
+    'red', 'blue', 'green', 'yellow', 'pink',
+    'orange', 'purple', 'cyan', 'lime', 'teal',
+    'red', 'blue', 'green', 'yellow', 'pink',
+    'orange', 'purple', 'cyan', 'lime', 'teal'
+];
 
-// poping a balloon is basically turning his color to null (no color)
-const popBalloon = (position) => {
-    // set the color to null on the balloon position
-    render();
-}
+// Función para renderizar globos en el DOM
+function renderBalloons() {
+    const balloonContainer = document.querySelector('#balloon-map');
+    const balloonCount = document.querySelector('#balloon-count');
+    balloonContainer.innerHTML = ''; // Limpiar contenido anterior
 
-const render = () => {
-    
-    // convert ballons map of colors into real html balloons
-    const ballons = ballonsMap.map((color, position) => {
-        return `<div class="balloon active"></div>`; // <--- render each balloon
+    // Generar HTML para cada globo
+    let activeBalloons = 0;
+    let rows = Math.ceil(Math.sqrt(balloonColors.length));
+    let columns = Math.ceil(balloonColors.length / rows);
+
+    balloonColors.forEach((color, index) => {
+        if (color !== null) { // Verificar que el globo no haya sido "reventado"
+            activeBalloons++;
+            const balloonHTML = `<div 
+          class="balloon active" 
+          style="background-color: ${color}; grid-row: ${Math.floor(index / columns) + 1}; grid-column: ${(index % columns) + 1};" 
+          onclick="popBalloon(${index})">
+        </div>`;
+            balloonContainer.innerHTML += balloonHTML;
+        }
     });
 
-    document.querySelector("#balloon-count").innerHTML = ballons.filter(b => b !== null).length; // <-- render the balloon count into the DOM
-    document.querySelector("#balloon-map").innerHTML = ballons.join(''); // <-- render the balloons into the DOM
-
-    if(activeBalloons == 0) window.location.reload(); // <--- reload website when no more balloons are left
+    // Actualizar contador de globos
+    balloonCount.textContent = activeBalloons;
 }
 
-// this makes the "render" function trigger when the website starts existing
-window.onload = render();
+// Función para "reventar" un globo
+function popBalloon(index) {
+    balloonColors[index] = null; // Cambiar el valor del globo a null
+    renderBalloons(); // Volver a renderizar los globos
+
+    // Verificar si todos los globos han sido "reventados"
+    if (balloonColors.every(color => color === null)) {
+        setTimeout(() => {
+            resetGame(); // Reiniciar el juego
+        }, 500); // Esperar medio segundo antes de reiniciar
+    }
+}
+
+// Función para reiniciar el juego
+function resetGame() {
+    // Restaurar colores originales
+    for (let i = 0; i < balloonColors.length; i++) {
+        balloonColors[i] = [
+            'red', 'blue', 'green', 'yellow', 'pink',
+            'orange', 'purple', 'cyan', 'lime', 'teal',
+            'red', 'blue', 'green', 'yellow', 'pink',
+            'orange', 'purple', 'cyan', 'lime', 'teal'
+        ][i];
+    }
+    renderBalloons();
+}
+
+// Ejecutar cuando la ventana cargue
+window.onload = () => {
+    renderBalloons();
+};
